@@ -1,0 +1,14 @@
+/Users/saoirsewatkins/CodingProjects/AdventureGame/AdventureGame/bin/Debug/net9.0/AdventureGame
+/Users/saoirsewatkins/CodingProjects/AdventureGame/AdventureGame/bin/Debug/net9.0/AdventureGame.deps.json
+/Users/saoirsewatkins/CodingProjects/AdventureGame/AdventureGame/bin/Debug/net9.0/AdventureGame.runtimeconfig.json
+/Users/saoirsewatkins/CodingProjects/AdventureGame/AdventureGame/bin/Debug/net9.0/AdventureGame.dll
+/Users/saoirsewatkins/CodingProjects/AdventureGame/AdventureGame/bin/Debug/net9.0/AdventureGame.pdb
+/Users/saoirsewatkins/CodingProjects/AdventureGame/AdventureGame/obj/Debug/net9.0/AdventureGame.GeneratedMSBuildEditorConfig.editorconfig
+/Users/saoirsewatkins/CodingProjects/AdventureGame/AdventureGame/obj/Debug/net9.0/AdventureGame.AssemblyInfoInputs.cache
+/Users/saoirsewatkins/CodingProjects/AdventureGame/AdventureGame/obj/Debug/net9.0/AdventureGame.AssemblyInfo.cs
+/Users/saoirsewatkins/CodingProjects/AdventureGame/AdventureGame/obj/Debug/net9.0/AdventureGame.csproj.CoreCompileInputs.cache
+/Users/saoirsewatkins/CodingProjects/AdventureGame/AdventureGame/obj/Debug/net9.0/AdventureGame.dll
+/Users/saoirsewatkins/CodingProjects/AdventureGame/AdventureGame/obj/Debug/net9.0/refint/AdventureGame.dll
+/Users/saoirsewatkins/CodingProjects/AdventureGame/AdventureGame/obj/Debug/net9.0/AdventureGame.pdb
+/Users/saoirsewatkins/CodingProjects/AdventureGame/AdventureGame/obj/Debug/net9.0/AdventureGame.genruntimeconfig.cache
+/Users/saoirsewatkins/CodingProjects/AdventureGame/AdventureGame/obj/Debug/net9.0/ref/AdventureGame.dll

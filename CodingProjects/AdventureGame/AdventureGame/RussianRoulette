@@ -1,0 +1,95 @@
+class MysteryMachined
+{
+
+    public static void RussianRoulette()
+    {
+        Random numberMaker = new Random();
+        bool isPlaying = true;
+        bool isShot = false;
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        while (isPlaying)
+        {
+            Console.WriteLine("---- LET THE GAMES BEGIN ---");
+            Thread.Sleep(5000);
+            Console.ForegroundColor = ConsoleColor.White;
+            string whitespace = "";
+            for (int bullets = numberMaker.Next(1, 7); bullets != numberMaker.Next(1, 7); numberMaker.Next(1, 7))
+            {
+                if (bullets == numberMaker.Next(1, 7))
+                {
+                    string dashes = whitespace.Replace(" ", "-");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(whitespace + "UNLUCKY!");
+                    Thread.Sleep(1000);
+                    Console.WriteLine(whitespace + "BANG!");
+                    Thread.Sleep(2500);
+                    Console.WriteLine(dashes + "YOU ARE DEAD" + dashes);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    isShot = true;
+                    break;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine(whitespace + "*Click*");
+                    Thread.Sleep(2500);
+                    whitespace += " ";
+                }
+            }
+            if (!isShot)
+            {
+                string dashes = whitespace.Replace(" ", "-");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(whitespace + "Fate has smiled upon you today...");
+                Thread.Sleep(2500);
+                Console.WriteLine(dashes + "LADY LUCK HAS SET YOU FREE" + dashes);
+                Thread.Sleep(1000);
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            bool awaiting = true;
+            while (awaiting)
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Would you like to play again? (Y/N)");
+                Console.ForegroundColor = ConsoleColor.White;
+                string ans = Console.ReadLine().ToUpper();
+                Thread.Sleep(500);
+                if (ans != "Y" && ans != "N")
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("You know that's not a valid input...");
+                    Thread.Sleep(500);
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    if (ans == "Y")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("GREAT CHOICE, LET'S LOAD THAT GUN RIGHT UP AGAIN!!!");
+                        Thread.Sleep(1000);
+                        awaiting = false;
+                    }
+                    else if (ans == "N")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("Well that's no fun...");
+                        Thread.Sleep(1000);
+                        awaiting = false;
+                        isPlaying = false;
+                    }
+                }
+            }
+        }
+    }
+    public void GainHealth(Player player)
+    {
+        if (wonGame)
+        {
+            player.health += 1;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+            System.Console.WriteLine($"Your player now has {player.health} health points");
+        }
+    }
+}
