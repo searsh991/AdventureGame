@@ -154,63 +154,6 @@ class AdventureGame
     {
         System.Console.WriteLine("Play Russian Roulette ");
     }
-    public void BattleMonster()
-    {
-        MakeMonster();
-        Console.ForegroundColor = ConsoleColor.Magenta;
-                {
-            System.Console.WriteLine("A monster with random health and attack damage has been generated");
-            System.Console.WriteLine("You must now choose whether you want to attack or defend");
-            System.Console.WriteLine("If you attack, you must use your damage points to kill the monster on your first go or you will automatically die from the counterattack and the game will end");
-            System.Console.WriteLine("If you defend, you must have enough health points to survive. Otherwise the monster wins, you die and the game ends");
-            System.Console.WriteLine("To Attack enter 1.");
-            System.Console.WriteLine("To Defend enter 2.");
-            int attackOrDefend = Int32.Parse(Console.ReadLine());
-        while (isRunning)
-            //TODO add try catch statement here
-            
-            if (attackOrDefend == 1)
-            {
-                if(player.damage>= monster.health)
-                {
-                    Console.BackgroundColor = ConsoleColor.Green;
-                    System.Console.WriteLine("Congratulations you won the game ");
-                    System.Console.WriteLine($"You had {player.damage} damage points and the monster only had {monster.health} health points ");
-                    isRunning = false;
-                    break;
-                }
-                else if(player.damage!> monster.health)
-                {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine("Damn it you lost");
-                    System.Console.WriteLine($"You had {player.damage} damage points but the monster had {monster.health} health points ");
-                    isRunning = false;
-                    break;
-                }
-            }
-            else if(attackOrDefend == 2)
-            {
-                if(player.health > monster.damage)
-                {
-                    Console.BackgroundColor = ConsoleColor.Green;
-                    System.Console.WriteLine("Congratulations you won the game ");
-                    System.Console.WriteLine($"You had {player.health} health points and the monster only had {monster.damage} damage points ");
-                    isRunning = false;
-                    break;
-
-                }
-                else if(player.health !> monster.damage)
-                {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine("Damn it you lost");
-                    System.Console.WriteLine($"You had {player.health} damage points but the monster had {monster.damage} damage points ");
-                    isRunning = false;
-                    break;
-                }
-                
-            }
-        }
-    }
 
     public void MakeMonster()
     {
@@ -218,7 +161,6 @@ class AdventureGame
         monster.health = randomNum.Next(1,8);
         monster.damage = randomNum.Next(1,8);
     }
-
     public int getNumberInput()
     { 
         string userInput;
@@ -237,6 +179,58 @@ class AdventureGame
         }
 
     }
+    public void BattleMonster()
+    {
+        MakeMonster();
+        Console.ForegroundColor = ConsoleColor.Magenta;
+                
+        System.Console.WriteLine("A monster with random health and attack damage has been generated");
+        System.Console.WriteLine("You must now choose whether you want to attack or defend");
+        System.Console.WriteLine("If you attack, you must use your damage points to kill the monster on your first go or you will automatically die from the counterattack and the game will end");
+        System.Console.WriteLine("If you defend, you must have enough health points to survive. Otherwise the monster wins, you die and the game ends");
+        System.Console.WriteLine("To Attack enter 1.");
+        System.Console.WriteLine("To Defend enter 2.");
+        // int attackOrDefend = Int32.Parse(Console.ReadLine());
+        int attackOrDefend = getNumberInput();
+            //TODO add try catch statement here
+            if (attackOrDefend == 1)
+            {
+                if(player.damage>= monster.health)
+                {
+                    Console.BackgroundColor = ConsoleColor.Green;
+                    System.Console.WriteLine("Congratulations you won the game ");
+                    System.Console.WriteLine($"You had {player.damage} damage points and the monster only had {monster.health} health points ");
+                    isRunning = false;
+                    // break;
+                }
+                else if(player.damage!> monster.health)
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    System.Console.WriteLine("Damn it you lost");
+                    System.Console.WriteLine($"You had {player.damage} damage points but the monster had {monster.health} health points ");
+                    isRunning = false;
+                    // break;
+                }
+            }
+            else if(attackOrDefend == 2)
+            {
+                if(player.health > monster.damage)
+                {
+                    Console.BackgroundColor = ConsoleColor.Green;
+                    System.Console.WriteLine("Congratulations you won the game ");
+                    System.Console.WriteLine($"You had {player.health} health points and the monster only had {monster.damage} damage points ");
+                    isRunning = false;
+                    // break;
 
-
-}
+                }
+                else if(player.health !> monster.damage)
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    System.Console.WriteLine("Damn it you lost");
+                    System.Console.WriteLine($"You had {player.health} damage points but the monster had {monster.damage} damage points ");
+                    isRunning = false;
+                    // break;
+                }
+            }
+        }
+    }
