@@ -1,4 +1,9 @@
 <Solution>
+  <Project Path="../../Library/CloudStorage/OneDrive-Dublin&amp;DunLaoghaireEducationTrainingBoard/FIT Apprenticeship/Development/C-Sharp/CodingChallenge/CodingChallenge.csproj" />
+  <Project Path="../../Library/CloudStorage/OneDrive-Dublin&amp;DunLaoghaireEducationTrainingBoard/FIT Apprenticeship/Development/C-Sharp/Elemental/Elemental.csproj" />
+  <Project Path="../../Library/CloudStorage/OneDrive-Dublin&amp;DunLaoghaireEducationTrainingBoard/FIT Apprenticeship/Development/C-Sharp/Objects/Objects.csproj" />
+  <Project Path="../../Library/CloudStorage/OneDrive-Dublin&amp;DunLaoghaireEducationTrainingBoard/FIT Apprenticeship/Development/Kraken/Kraken.csproj" />
+  <Project Path="../ArraysExample/ArraysExample.csproj" />
   <Project Path="../MathsGame/MathsGame.csproj" />
   <Project Path="../MysteryMachine/MysteryMachine.csproj" />
   <Project Path="AdventureGame/AdventureGame.csproj" />

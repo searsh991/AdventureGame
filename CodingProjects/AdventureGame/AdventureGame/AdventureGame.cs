@@ -1,6 +1,7 @@
 
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 
 
@@ -21,6 +22,16 @@ using System.Text.RegularExpressions;
         -   Generate monster wth random damage and health 
         - either let them attack you first and if you dont die you win or you attack them first and if you dont kill them you lose
 
+*TODO Change words to attack points and defend points 
+    - Colour planning 
+    - General Instructions = Yellow 
+    - Action Instruction = Blue 
+    - Player Information = Green 
+    - Menu = different for each  
+    - Health and damage declaratuion = red 
+    - Win = background green 
+    - Lost = background red 
+
 **/
 class AdventureGame
 {
@@ -38,19 +49,25 @@ class AdventureGame
     }
     public void Play()
     {
-        // while (isRuning && !player.isDead())
-        // {
-        //     System.Console.WriteLine("Welcome to the best game known to man");
-        // }
+        Console.ForegroundColor = ConsoleColor.DarkMagenta;
+        Console.WriteLine("\n******CRASH******");
+        Thread.Sleep(1000);
+        Console.WriteLine("******BANG*******");
+        Thread.Sleep(1000);
+        Console.WriteLine("******CLANG******\n");
+        Console.BackgroundColor = ConsoleColor.Black;
+        Console.ForegroundColor = ConsoleColor.Yellow;
 
         //Instructions 
-        System.Console.WriteLine("This is a battle game with mini games inside");
-        System.Console.WriteLine("First you will generate a player name");
-        System.Console.WriteLine("Both you and the monster will be given random health and damage points ranging from 1-10");
-        System.Console.WriteLine("To get more health points you can play a maximum of 2 games of higher and lower");
-        System.Console.WriteLine("To get more damage points you can play a maximum of 2 games of Russian Roulette");
-        System.Console.WriteLine("Once you are happy with your attack and damage points you must go and battle the monster");
-        System.Console.WriteLine("Good Luck");
+        TypeSlowly("\nWELCOME TO BATTLE IT OUT\n");
+        TypeSlowly("\nYou have just landed on a foreign planet called Mopia where the only way to escape is to beat the planets resident MONSTERRRRRRR\n");
+        //generate name and points 
+        // typeSlowly("\nWhenever someone new lands on Mopia the planets gods randomly allocate you and the monster a random number of attack an defence points\n");
+
+        // System.Console.WriteLine("To get more health points you can play a maximum of 2 games of higher and lower");
+        // System.Console.WriteLine("To get more damage points you can play a maximum of 2 games of Russian Roulette");
+        // System.Console.WriteLine("Once you are happy with your attack and damage points you must go and battle the monster");
+        // System.Console.WriteLine("Good Luck");
 
         MakePlayer();
         while(isRunning){
@@ -59,50 +76,43 @@ class AdventureGame
         
 
     }
-
     public void MakePlayer()
     {
         player = new Player();
         Console.ForegroundColor = ConsoleColor.Yellow;
-        System.Console.WriteLine("The first step to making your player is generating your superplayer name");
-        System.Console.WriteLine("To generate your name you need to answer 3 questions. The first letter should be capital");
-        Console.ForegroundColor = ConsoleColor.DarkCyan;
-        System.Console.WriteLine("Firstly, please enter your favourite soft drink");
-        string favSoftDrink = Console.ReadLine();
-        System.Console.WriteLine("Now enter your favourite animal");
-        string favAnimal = Console.ReadLine();
-        System.Console.WriteLine("Now please enter an adjective of your choice");
-        string adjective = Console.ReadLine();
-
-        string playerName = adjective+favSoftDrink+favAnimal;
-        player.characterName = playerName;
+        TypeSlowly("\nBefore we start I neded to know what to call you\n");
+        Console.ForegroundColor = ConsoleColor.Blue;
+        System.Console.WriteLine("\nINPUT YOUR NAME HERE\n");
+        player.characterName = Console.ReadLine();
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        TypeSlowly($"\nNice to meet you agent {player.characterName}\n");
+        TypeSlowly("\nWhenever someone new lands on Mopia the planets gods randomly allocate you and the monster a random number of attack an defence points\n");
+        TypeSlowly($"\nLets see how lucky you are agent {player.characterName}\n");
+        
         player.health = randomNum.Next(1,8);
         player.damage = randomNum.Next(1,8);
-
+        DisplayHealth(player.health, player.damage);
+        
         Console.ForegroundColor = ConsoleColor.Yellow;
-        System.Console.WriteLine("Here comes your player informaton. Lets see how lucky you got with your health and damage points");
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        ShowPlayerInfo();
+        TypeSlowly("\nHere on PLANET MOPIA we give you a few chances to level up before you go and battle the monster\n");
+        TypeSlowly("\nYou can win up to 2 extra health and defence points by winning games of Higher and Lower\n");
+        TypeSlowly("\nYou can win up to 2 extra attack and damage points by winning games of Russian Roulette\n");
     }
 
     public void Menu()
     {
         Console.ForegroundColor = ConsoleColor.Red;
-        //Console.BackgroundColor = ConsoleColor.Red;
-        System.Console.WriteLine("Welcome to the menu");
+        Console.WriteLine("\n******WELCOME TO THE MENU******\n");
         Console.ForegroundColor = ConsoleColor.Blue;
-        System.Console.WriteLine("To get player info enter 1");
+        TypeSlowly("\nTo get player info enter 1\n");
         Console.ForegroundColor = ConsoleColor.DarkGreen;
-        System.Console.WriteLine("To play higher or lower enter 2");
+        TypeSlowly("\nTo play higher or lower enter 2\n");
         Console.ForegroundColor = ConsoleColor.Magenta;
-        System.Console.WriteLine("To play russian roulette enter 3");
+        TypeSlowly("\nTo play russian roulette enter 3\n");
         Console.ForegroundColor = ConsoleColor.Gray;
-        System.Console.WriteLine("To battle enter 4");
+        TypeSlowly("\nTo battle enter 4\n");
         Console.ForegroundColor = ConsoleColor.DarkRed;
-        System.Console.WriteLine("To exit the game enter 5");
-        //string userInput = Console.ReadLine();
-
-
+        TypeSlowly("\nTo exit the game enter 5\n");
         int userMenuChoice = getNumberInput();
         //int userMenuChoice = Int32.Parse(Console.ReadLine());
         if(userMenuChoice== 1)
@@ -140,10 +150,10 @@ class AdventureGame
     {
         Console.ForegroundColor = ConsoleColor.Yellow;
         System.Console.WriteLine("Wecome to higher or lower");
-        System.Console.WriteLine("You will play 3 rounds");
-        System.Console.WriteLine("You will be given a number and you must guess if the next number is higher or lower");
-        System.Console.WriteLine("If you win 2/3 of the rounds you will gain a health point ");
-    
+        System.Console.WriteLine("Each game contains 3 rounds. If you win 2/3 of the rounds you will gain a health point!");
+        System.Console.WriteLine("You will be given a random number");
+        System.Console.WriteLine("If you think the next number will be higher, type 'H'");
+        System.Console.WriteLine("If you think the next number will be lower, type 'L'");    
         Console.ForegroundColor = ConsoleColor.DarkGreen;
         HigherOrLower higherOrLower = new HigherOrLower();
         higherOrLower.PlayHigherOrLower(player);
@@ -192,45 +202,84 @@ class AdventureGame
         System.Console.WriteLine("To Defend enter 2.");
         // int attackOrDefend = Int32.Parse(Console.ReadLine());
         int attackOrDefend = getNumberInput();
-            //TODO add try catch statement here
-            if (attackOrDefend == 1)
+        if (attackOrDefend == 1)
+        {
+            if(player.damage>= monster.health)
             {
-                if(player.damage>= monster.health)
-                {
-                    Console.BackgroundColor = ConsoleColor.Green;
-                    System.Console.WriteLine("Congratulations you won the game ");
-                    System.Console.WriteLine($"You had {player.damage} damage points and the monster only had {monster.health} health points ");
-                    isRunning = false;
-                    // break;
-                }
-                else if(player.damage!> monster.health)
-                {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine("Damn it you lost");
-                    System.Console.WriteLine($"You had {player.damage} damage points but the monster had {monster.health} health points ");
-                    isRunning = false;
-                    // break;
-                }
+                Console.BackgroundColor = ConsoleColor.Green;
+                System.Console.WriteLine("Congratulations you won the game ");
+                System.Console.WriteLine($"You had {player.damage} damage points and the monster only had {monster.health} health points ");
+                isRunning = false;
+                // break;
             }
-            else if(attackOrDefend == 2)
+            else if(player.damage!> monster.health)
             {
-                if(player.health > monster.damage)
-                {
-                    Console.BackgroundColor = ConsoleColor.Green;
-                    System.Console.WriteLine("Congratulations you won the game ");
-                    System.Console.WriteLine($"You had {player.health} health points and the monster only had {monster.damage} damage points ");
-                    isRunning = false;
-                    // break;
+                Console.BackgroundColor = ConsoleColor.Red;
+                System.Console.WriteLine("Damn it you lost");
+                System.Console.WriteLine($"You had {player.damage} damage points but the monster had {monster.health} health points ");
+                isRunning = false;
+                // break;
+            }
+        }
+        else if(attackOrDefend == 2)
+        {
+            if(player.health > monster.damage)
+            {
+                Console.BackgroundColor = ConsoleColor.Green;
+                System.Console.WriteLine("Congratulations you won the game ");
+                System.Console.WriteLine($"You had {player.health} health points and the monster only had {monster.damage} damage points ");
+                isRunning = false;
+                // break;
 
-                }
-                else if(player.health !> monster.damage)
-                {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    System.Console.WriteLine("Damn it you lost");
-                    System.Console.WriteLine($"You had {player.health} damage points but the monster had {monster.damage} damage points ");
-                    isRunning = false;
-                    // break;
-                }
+            }
+            else if(player.health !> monster.damage)
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
+                System.Console.WriteLine("Damn it you lost");
+                System.Console.WriteLine($"You had {player.health} damage points but the monster had {monster.damage} damage points ");
+                isRunning = false;
+                // break;
             }
         }
     }
+
+    public static void TypeSlowly(string text)
+    {
+        Random randomNum= new Random();
+        foreach(char c in text)
+        {
+            Console.Write(c);
+            Thread.Sleep(randomNum.Next(30,80));
+        }
+    }
+
+    public static void DisplayHealth(int health, int damage)
+    {
+        Console.ForegroundColor = ConsoleColor.DarkRed;
+
+        if (health >=5 )
+        {
+            TypeSlowly("You got lucky!");
+            Console.WriteLine($"\n*****DEFENCE IS {health}*****\n");
+        }
+        else
+        {
+            TypeSlowly("Unlucky your health is pretty low");
+   
+            Console.WriteLine($"\n*****DEFENCE IS {health}*****\n");
+        }
+
+        if (damage >=5 )
+        {
+            TypeSlowly("You got lucky!");
+            Console.WriteLine($"\n*****ATTACK IS {damage}*****\n");
+        }
+        else
+        {
+            TypeSlowly("Unlucky your health is pretty low");
+   
+            Console.WriteLine($"\n*****ATTACK IS {damage}*****\n");
+        }
+    }
+}
+    
