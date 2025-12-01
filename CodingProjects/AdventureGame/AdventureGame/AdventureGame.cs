@@ -32,6 +32,12 @@ using System.Text.RegularExpressions;
     - Win = background green 
     - Lost = background red 
 
+    Incorporating team battle
+    when you start you generate a team and you go through the mini games to add to their points. 
+    Battle means the battle against auto team is generated 
+    *TODO Add names to each player , A for auto team and M for my team 
+    *TODO change arrays to lists for teams 
+
 **/
 class AdventureGame
 {
@@ -40,6 +46,7 @@ class AdventureGame
     Monster monster;
     HigherOrLower higherOrLower;
     bool isRunning {get; set;} = true;
+    List<string> autoTeamNames = LoadNames("./resources/fighter_names_A.txt");
 
     public static void Main(string[] args)
     {
@@ -57,25 +64,39 @@ class AdventureGame
         Console.WriteLine("******CLANG******\n");
         Console.BackgroundColor = ConsoleColor.Black;
         Console.ForegroundColor = ConsoleColor.Yellow;
+        List<Fighter> myTeam = new List<Fighter>{};
+        List<Fighter> otherTeam =new List<Fighter>{};
 
-        //Instructions 
-        TypeSlowly("\nWELCOME TO BATTLE IT OUT\n");
-        TypeSlowly("\nYou have just landed on a foreign planet called Mopia where the only way to escape is to beat the planets resident MONSTERRRRRRR\n");
+    
         //generate name and points 
         // typeSlowly("\nWhenever someone new lands on Mopia the planets gods randomly allocate you and the monster a random number of attack an defence points\n");
 
         // System.Console.WriteLine("To get more health points you can play a maximum of 2 games of higher and lower");
         // System.Console.WriteLine("To get more damage points you can play a maximum of 2 games of Russian Roulette");
         // System.Console.WriteLine("Once you are happy with your attack and damage points you must go and battle the monster");
-        // System.Console.WriteLine("Good Luck");
+        System.Console.WriteLine("Good Luck");
 
+        GameInfo();
         MakePlayer();
+        myTeam = PickTeam(myTeam);
+        //otherTeam = AutoTeam(otherTeam);
         while(isRunning){
             Menu();
         }
         
 
     }
+
+    private void GameInfo()
+    {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        TypeSlowly("\nWELCOME TO BATTLE IT OUT\n");
+        TypeSlowly("\nYou have just landed on a foreign planet called Mopia where the only way to escape is to beat the planets team of resident MONSTERRRRRRRSSS\n");
+        TypeSlowly("\nYou will generate a player who will work through a number of mini games to earn points");
+        TypeSlowly("\nOnce you are happy with your points you will generate a team of fighters to battle the team of monsters");
+        TypeSlowly("\nThen you can use the points you earnt to level up your team");
+    }
+
     public void MakePlayer()
     {
         player = new Player();
@@ -86,18 +107,79 @@ class AdventureGame
         player.characterName = Console.ReadLine();
         Console.ForegroundColor = ConsoleColor.Yellow;
         TypeSlowly($"\nNice to meet you agent {player.characterName}\n");
-        TypeSlowly("\nWhenever someone new lands on Mopia the planets gods randomly allocate you and the monster a random number of attack an defence points\n");
         TypeSlowly($"\nLets see how lucky you are agent {player.characterName}\n");
         
         player.health = randomNum.Next(1,8);
-        player.damage = randomNum.Next(1,8);
-        DisplayHealth(player.health, player.damage);
-        
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        TypeSlowly("\nHere on PLANET MOPIA we give you a few chances to level up before you go and battle the monster\n");
-        TypeSlowly("\nYou can win up to 2 extra health and defence points by winning games of Higher and Lower\n");
-        TypeSlowly("\nYou can win up to 2 extra attack and damage points by winning games of Russian Roulette\n");
+        TypeSlowly($"\nYou received {player.health} health points\n");
+
     }
+
+     public static List<Fighter> PickTeam(List<Fighter> Team)
+        {
+            bool autoTeam = false;
+            int teamNum = 0;  
+            TypeSlowly("There are three different types of fighters to choose from");
+            Console.WriteLine("\nType 1 for Thor: A GREAT SWORD\nType 2 for SpiderMan: CUNNING AND AGILE\nType 3 for HawkEye: THE RANGE\nPlease Pick Your Team (input number now )");
+            while(Team.Count != 5)
+            {
+                // int choosenWarrior = Convert.ToInt32(Console.ReadLine());
+                int choosenWarrior = getValidNum();
+                Team = createTeam(Team, choosenWarrior, teamNum, autoTeam);
+                teamNum++;
+            }
+            return Team;
+        }
+
+         public static List<Fighter> createTeam(List<Fighter> Team, int choosenWarrior, int teamNum, bool autoTeam)
+        {
+
+            List<string> playerTeamNames = LoadNames("./resources/fighter_names_M.txt");
+            
+                if(choosenWarrior == 1)
+                {
+                    Fighter fighter = new Fighter("Thor");
+                    fighter.name = GetUniqueName(playerTeamNames);
+                    fighter.autoTeam = autoTeam;
+                    Team.Add(fighter);
+                    PrintStats(fighter);
+                    // teamNum++;
+                }else if(choosenWarrior == 2)
+                {
+                    Fighter fighter = new Fighter("SpiderMan");
+                    fighter.autoTeam = autoTeam;
+                    fighter.name = GetUniqueName(playerTeamNames);
+                    Team.Add(fighter);
+                    PrintStats(fighter);
+                    // teamNum++;
+                }
+                else if(choosenWarrior == 3)
+                {
+                    Fighter fighter = new Fighter("HawkEye");
+                    fighter.autoTeam = autoTeam;
+                    fighter.name = GetUniqueName(playerTeamNames);
+                    Team.Add(fighter);
+                    PrintStats(fighter);
+                    // teamNum++;
+                }
+            return Team;
+        }
+
+        public static int getValidNum()
+        {
+            while (true)
+            {
+            string userInput = Console.ReadLine();
+            if (userInput.All(char.IsDigit)){
+               int num = Int32.Parse(userInput);
+                if(num < 4 && num > 0)
+                {
+                    return num;
+                }
+            }
+            Console.WriteLine("Invalid input");
+            }
+        }
+    
 
     public void Menu()
     {
@@ -135,7 +217,20 @@ class AdventureGame
         {
             isRunning = false;
         }
-        
+    }
+
+    public static void PrintStats(Fighter fighter)
+    {  
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("Name: " + fighter.name);
+        Console.WriteLine("AutoTeam: " + fighter.autoTeam);
+        Console.WriteLine("Type: " + fighter.Wtype);
+        Console.WriteLine("Attack Points: " + fighter.att);
+        Console.WriteLine("Defence Points: " + fighter.def);
+        Console.WriteLine("Health Points: " + fighter.hp);
+        Console.WriteLine("Speed Points: " + fighter.spe);
+        Console.WriteLine("Weakness: " + fighter.weakness);
+        Console.ResetColor();
 
     }
 
@@ -280,6 +375,29 @@ class AdventureGame
    
             Console.WriteLine($"\n*****ATTACK IS {damage}*****\n");
         }
+    }
+
+    public static string GetUniqueName(List <string> teamNamesArray)
+    {
+        Random random = new Random();
+        int randomIndex = random.Next(teamNamesArray.Count());
+        string chosenName = teamNamesArray[randomIndex];
+        teamNamesArray.RemoveAt(randomIndex);
+
+        return chosenName;
+    }
+    public static List<string> LoadNames(string filePath)
+    {
+        string[] lines = File.ReadAllLines(filePath);
+        List<string> names = new List<string>{};
+        foreach(string line in lines)
+        {
+            if (!string.IsNullOrWhiteSpace(line))
+            {
+                names.Add(line);
+            }
+        }
+        return names;
     }
 }
     
